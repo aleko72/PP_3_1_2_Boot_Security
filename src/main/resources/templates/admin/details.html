@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+</head>
+<body>
+    <h2 th:text="'Подробности: ' + ${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
+    <p th:text="'Имя: ' + ${user.getFirstName()}"></p>
+    <p th:text="'Фамилия: ' + ${user.getLastName()}"></p>
+    <p th:text="'Возраст: ' + ${user.getAge()}"></p>
+<hr>
+    <div style="float: left; margin-right: 5px;">
+        <a th:href="@{/admin/{id}/edit(id=${user.getId()})}"><input type="button" value="Edit"/></a>
+    </div>
+    <div>
+        <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div>
+</body>
+</html>
