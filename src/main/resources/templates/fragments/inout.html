@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div sec:authorize="isAnonymous()" style="position: relative;left: 350px; display:inline;"><a th:href="@{/login}"><input type="button" value="Вoйти"/></a></div>
+<div sec:authorize="isAuthenticated()" style="position: relative;left: 350px; display:inline;"><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
+</body>
+</html>

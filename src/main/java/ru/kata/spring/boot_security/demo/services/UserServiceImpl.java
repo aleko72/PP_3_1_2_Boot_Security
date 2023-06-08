@@ -8,27 +8,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<User> getUsers() {
-        List<User> users = userRepository.findAll();
-        return users;
+        return userRepository.findAll();
     }
 
     @Override
@@ -43,8 +44,10 @@ public class UserServiceImpl implements UserService {
         if(userFromDB != null){
             return;
         }
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        user.setRoles(Collections.singleton(userRole));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(new Role(2L,"USER")));
+
         userRepository.save(user);
     }
 
@@ -52,9 +55,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(long id, User user) {
         User userUpdate = getUserById(id);
-        user.setLogin(userUpdate.getLogin());
-        user.setPassword(userUpdate.getPassword());
-        userRepository.save(user);
+        if(userUpdate != null){
+            userUpdate.setFirstName(user.getFirstName());
+            userUpdate.setLastName(user.getLastName());
+            userUpdate.setAge(user.getAge());
+            userRepository.save(userUpdate);
+        }
     }
 
     @Override

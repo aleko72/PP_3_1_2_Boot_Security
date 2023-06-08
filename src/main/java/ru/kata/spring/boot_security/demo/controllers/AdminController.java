@@ -3,13 +3,12 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.Collections;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -17,12 +16,10 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
-    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -39,14 +36,15 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user){
+    public String newUser(@ModelAttribute User user){
         return "admin/new";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("user") User user){
-        Role userRole = roleService.findByName("ROLE_USER");
-        user.setRoles(Collections.singleton(userRole));
+    public String create(@Valid User user, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "admin/new";
+        }
         userService.save(user);
         return "redirect:/admin";
     }
@@ -58,7 +56,12 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable("id") Long id, @ModelAttribute("user") User user){
+    public String update(@PathVariable("id") Long id, @Valid User user, BindingResult bindingResult){
+        boolean hasError = bindingResult.getFieldErrors().stream()
+                .anyMatch(f -> !f.getField().equals("login") && !f.getField().equals("password"));
+        if(hasError){
+            return "admin/edit";
+        }
         userService.update(id, user);
         return "redirect:/admin";
     }

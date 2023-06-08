@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <html >
 <head>
     <meta charset="UTF-8">
     <title>User Details</title>
 </head>
 <body>
+<div th:replace="fragments/inout"></div>
     <h2 th:text="'Подробности: ' + ${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
     <p th:text="'Имя: ' + ${user.getFirstName()}"></p>
     <p th:text="'Фамилия: ' + ${user.getLastName()}"></p>
@@ -19,7 +20,5 @@
             <input type="submit" value="Delete"/>
         </form>
     </div>
-    <br><br>
-    <div><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>

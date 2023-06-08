@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
 </head>
 <body>
+<div th:replace="fragments/inout"></div>
 <h2>Список пользователей: </h2>
 <table style="border-spacing: 5px">
     <th style="text-align: left">Имя</th>
@@ -31,6 +32,5 @@
 <br>
 <hr>
 <div><a th:href="@{/admin/new}"><input type="button" value="Создать пользователя"/></a></div>
-<div style="position: relative;left: 350px;"><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>

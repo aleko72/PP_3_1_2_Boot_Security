@@ -5,34 +5,48 @@
     <title>New user</title>
 </head>
 <body>
+<div th:replace="fragments/inout"></div>
 <h2>Создание пользователя: </h2>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-    <table cellpadding="2px">
+    <table style="border-spacing: 2px">
         <tr>
             <td><label for="login">Login: </label></td>
-            <td><input type="text" th:field="*{login}" id="login"/></td>
+            <td>
+                <input type="text" th:field="*{login}" id="login"/>
+                <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+            </td>
         </tr>
         <tr>
             <td><label for="password">Password: </label></td>
-            <td><input type="text" th:field="*{password}" id="password"/></td>
+            <td>
+                <input type="text" th:field="*{password}" id="password"/>
+                <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </td>
         </tr>
         <tr>
-            <td><label for="name">Имя: </label></td>
-            <td><input type="text" th:field="*{firstName}" id="name"/></td>
+            <td><label for="firstName">Имя: </label></td>
+            <td>
+                <input type="text" th:field="*{firstName}" id="firstName"/>
+                <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            </td>
         </tr>
         <tr>
             <td><label for="lastName">Фамилия: </label></td>
-            <td><input type="text" th:field="*{lastName}" id="lastName"/></td>
+            <td>
+                <input type="text" th:field="*{lastName}" id="lastName"/>
+                <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            </td>
         </tr>
         <tr>
             <td><label for="age">Возраст: </label></td>
-            <td><input type="text" th:field="*{age}" id="age"/></td>
+            <td>
+                <input type="text" th:field="*{age}" id="age"/>
+                <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+            </td>
         </tr>
     </table>
     <br>
     <input type="submit" value="Create">
 </form>
-<br><br>
-<div><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>
