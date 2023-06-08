@@ -7,19 +7,32 @@
 <body>
 <h2>Создание пользователя: </h2>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-    <label for="login">Login: </label>
-    <input type="text" th:field="*{login}" id="login"/>
-    <br><br>
-    <label for="name">FirstName: </label>
-    <input type="text" th:field="*{firstName}" id="name"/>
-    <br><br>
-    <label for="lastName">LastName: </label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <br><br>
-    <label for="age">Age: </label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <br><br>
+    <table cellpadding="2px">
+        <tr>
+            <td><label for="login">Login: </label></td>
+            <td><input type="text" th:field="*{login}" id="login"/></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password: </label></td>
+            <td><input type="text" th:field="*{password}" id="password"/></td>
+        </tr>
+        <tr>
+            <td><label for="name">Имя: </label></td>
+            <td><input type="text" th:field="*{firstName}" id="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="lastName">Фамилия: </label></td>
+            <td><input type="text" th:field="*{lastName}" id="lastName"/></td>
+        </tr>
+        <tr>
+            <td><label for="age">Возраст: </label></td>
+            <td><input type="text" th:field="*{age}" id="age"/></td>
+        </tr>
+    </table>
+    <br>
     <input type="submit" value="Create">
 </form>
+<br><br>
+<div><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>

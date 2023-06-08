@@ -6,10 +6,10 @@
 </head>
 <body>
 <h2>Список пользователей: </h2>
-<table cellpadding="5px">
-    <th align="left">Имя</th>
-    <th align="left">Фамилия</th>
-    <th align="left">Возраст</th>
+<table style="border-spacing: 5px">
+    <th style="text-align: left">Имя</th>
+    <th style="text-align: left">Фамилия</th>
+    <th style="text-align: left">Возраст</th>
     <th></th>
     <th></th>
     <th></th>
@@ -30,6 +30,7 @@
 </table>
 <br>
 <hr>
-<div><a th:href="@{/admin/new}">Create new User</a></div>
+<div><a th:href="@{/admin/new}"><input type="button" value="Создать пользователя"/></a></div>
+<div style="position: relative;left: 350px;"><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>

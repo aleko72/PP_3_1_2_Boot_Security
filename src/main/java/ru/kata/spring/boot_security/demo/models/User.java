@@ -1,8 +1,18 @@
 package ru.kata.spring.boot_security.demo.models;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.GenerationType;
 import java.util.Collection;
 
 @Entity
@@ -13,20 +23,20 @@ public class User implements UserDetails{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "login")
+    @Column(name = "login", nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     @Column(name = "age")
     private int age;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -60,6 +70,7 @@ public class User implements UserDetails{
         this.login = login;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }

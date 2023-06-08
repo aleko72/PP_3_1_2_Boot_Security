@@ -15,8 +15,10 @@
     <br><br>
     <label for="age">Age: </label>
     <input type="text" th:field="*{age}" id="age"/>
-    <br><br>
+    <br><br><hr>
     <input type="submit" value="Update">
 </form>
+<br><br>
+<div><a th:href="@{/logout}"><input type="button" value="Выйти"/></a></div>
 </body>
 </html>
