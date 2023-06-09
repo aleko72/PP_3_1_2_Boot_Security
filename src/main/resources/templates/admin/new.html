@@ -5,7 +5,7 @@
     <title>New user</title>
 </head>
 <body>
-<div th:replace="fragments/inout"></div>
+<div th:replace="fragments/top_navbar"></div>
 <h2>Создание пользователя: </h2>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
     <table style="border-spacing: 2px">
