@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <span class="navbar-brand mb-0 h1">admin@mail.ru</span>
-    <span class="navbar-brand mb-0">with roles: ADMIN USER</span>
+    <span data-sec-authentication="name" class="navbar-brand mb-0 h1"></span>
+    <span class="navbar-brand mb-0">with roles:</span>
+    <span sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-brand mb-0">ADMIN</span>
+    <span sec:authorize="hasRole('ROLE_USER')" class="navbar-brand mb-0">USER</span>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">

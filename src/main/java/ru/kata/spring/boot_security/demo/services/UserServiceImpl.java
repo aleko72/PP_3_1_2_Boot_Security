@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void save(User user) {
-        User userFromDB = userRepository.findByLogin(user.getLogin());
+        User userFromDB = userRepository.findByEmail(user.getEmail());
         if(userFromDB != null){
             return;
         }
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(username);
+        User user = userRepository.findByEmail(username);
         if(user == null){
             throw new UsernameNotFoundException(String.format("User: '%s', not found", username));
         }

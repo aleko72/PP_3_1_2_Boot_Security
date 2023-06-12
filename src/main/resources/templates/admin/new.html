@@ -10,10 +10,10 @@
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
     <table style="border-spacing: 2px">
         <tr>
-            <td><label for="login">Login: </label></td>
+            <td><label for="email">Login: </label></td>
             <td>
-                <input type="text" th:field="*{login}" id="login"/>
-                <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+                <input type="text" th:field="*{email}" id="email"/>
+                <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </td>
         </tr>
         <tr>
