@@ -72,37 +72,14 @@
         integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
         crossorigin="anonymous"></script>
 <script>
-    $(function () {
-        $('.tab-link').on('click', function () {
-            $('.tab-link').removeClass('active');
-            $(this).addClass('active');
-            if($(this).text() === 'New User'){
-                $('.users-container').hide();
-                $('.new-user-container').show();
-                $('.content-title').text('Add new user');
-            }else{
-                $('.users-container').show();
-                $('.new-user-container').hide();
-                $('.content-title').text('All users');
-            }
-        });
-    });
+
     $(function () {
         $('.right-link').on('click', function () {
             $('.right-link').removeClass('active');
             $(this).addClass('active');
         });
     });
-    $(function () {
-        $.ajax({
-            url: "/admin/ajax",
-            type: "GET",
-            cash: false,
-            success: function (data) {
-                $('.container').html(data);
-            }
-        });
-    });
+
 </script>
 </body>
 </html>

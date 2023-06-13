@@ -43,8 +43,6 @@ public class UserController {
         return "index";
     }
 
-
-
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model){
         model.addAttribute("user", userService.getUserById(id));
@@ -53,18 +51,13 @@ public class UserController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute User user){
-        return "admin/new";
+        return "fragments/form_new";
     }
 
-    @GetMapping("/ajax")
-    public String test(@ModelAttribute User user){
-        return "admin/new";
-    }
-
-    @PostMapping()
+    @PostMapping("/")
     public String create(@Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "admin/new";
+            return "fragments/form_new";
         }
         userService.save(user);
         return "redirect:/";
@@ -73,7 +66,7 @@ public class UserController {
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id){
         model.addAttribute("user", userService.getUserById(id));
-        return "edit";
+        return "fragments/edit";
     }
 
     @PatchMapping("/{id}")
