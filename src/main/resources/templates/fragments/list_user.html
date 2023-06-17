@@ -1,0 +1,39 @@
+
+<div class="uc-users-table">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Age</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <th scope="row" th:text="${user.getId()}"></th>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td th:text="${user.getAge()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getRolesString()}"></td>
+                <td>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal"
+                            th:onclick="'javascript:getEditUserForm(' + ${user.getId()} + ')'">Edit
+                    </button>
+                </td>
+                <td>
+                    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>

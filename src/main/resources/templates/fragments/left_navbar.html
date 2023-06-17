@@ -1,0 +1,10 @@
+<div class="sidenav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" th:object="${roles}">
+    <ul class="nav nav-pills flex-column">
+        <th:block th:each="role : ${roles}">
+        <li class="nav-item">
+            <a th:attr="class=${role.equals(active) ? 'left-link nav-link active' : 'left-link nav-link'}"
+               th:href="@{/{link}(link=${role.toLowerCase()})}" th:text="${role}"></a>
+        </li>
+        </th:block>
+    </ul>
+</div>

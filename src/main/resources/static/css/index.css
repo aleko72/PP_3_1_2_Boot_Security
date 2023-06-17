@@ -1,0 +1,41 @@
+.row.content {
+    background-color: #f8f9fa;
+    height: 1450px;
+}
+
+.sidenav {
+    padding-top: 20px;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: white;
+    height: 100%;
+}
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.uc-title {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.tab-content{
+    border: 1px solid #d6dbdf;
+    border-radius: 0 0 5px 5px;
+    background-color: white;
+    padding: 25px;
+}
+
+.uc-new-user-form {
+    margin: auto;
+    width: 35%;
+    text-align: center;
+    padding: 15px;
+}
+
+.uc-content-title {
+    background-color: #f8f9fa;
+    border: 1px solid #d6dbdf;
+    border-radius: 5px 5px 0 0;
+}

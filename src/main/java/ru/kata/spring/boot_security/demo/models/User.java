@@ -9,6 +9,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -118,10 +120,16 @@ public class User implements UserDetails{
         this.roles = roles;
     }
 
-    public String getRolesString(){
-        StringBuilder sbRoles = new StringBuilder();
-        roles.forEach(r -> sbRoles.append(r.getName().substring(5)).append(" "));
-        return sbRoles.toString();
+    public List<String> getRoleNames() {
+        return roles.stream().map(this::normalizeName).sorted().collect(Collectors.toList());
+    }
+    public String getRolesString() {
+        return String.join(" ", getRoleNames()).toUpperCase();
+    }
+
+    private String normalizeName(Role role) {
+        String name = role.getName().substring(5).toLowerCase();
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
     @Override
