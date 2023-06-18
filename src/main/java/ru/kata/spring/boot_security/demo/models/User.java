@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -130,6 +131,13 @@ public class User implements UserDetails{
     private String normalizeName(Role role) {
         String name = role.getName().substring(5).toLowerCase();
         return name.substring(0, 1).toUpperCase() + name.substring(1);
+    }
+
+    public String getRoleIdsString() {
+        return roles
+                .stream()
+                .map(role -> role.getId().toString())
+                .collect(Collectors.joining(" "));
     }
 
     @Override

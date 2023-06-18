@@ -1,5 +1,4 @@
-
-<div class="uc-users-table">
+<div class="uc-users-table" th:object="${users}">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -24,8 +23,12 @@
                 <td th:text="${user.getRolesString()}"></td>
                 <td>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal"
-                            th:onclick="'javascript:getEditUserForm(' + ${user.getId()} + ')'">Edit
-                    </button>
+                            th:attr="data-id=${user.getId()},
+                            data-firstName=${user.getFirstName()},
+                            data-lastName=${user.getLastName()},
+                            data-age=${user.getAge()},
+                            data-email=${user.getEmail()},
+                            data-roles=${user.getRoleIdsString()}">Edit</button>
                 </td>
                 <td>
                     <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">

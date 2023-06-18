@@ -1,4 +1,16 @@
 $(function () {
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        modal.find('#firstName').val(button.attr('data-firstName'));
+        modal.find('#lastName').val(button.attr('data-lastName'));
+        modal.find('#age').val(button.attr('data-age'));
+        modal.find('#email').val(button.attr('data-email'));
+        var roles = button.attr('data-roles').split(' ');
+
+        modal.find('#roles').val(roles);
+
+    })
     // $('.left-link').on('click', function () {
     //     $('.left-link').removeClass('active');
     //     $(this).addClass('active');
@@ -43,16 +55,17 @@ $(function (){
 
     })
 });
-function getEditUserForm(id) {
-    $.ajax({
-        url: "/admin/" + id + "/edit",
-        type: "GET",
-        cash: false,
-        success: function (data) {
-            $('.modal-body').html(data);
-        }
-    });
-}
+
+// function getEditUserForm(id) {
+//     $.ajax({
+//         url: "/admin/" + id + "/edit",
+//         type: "GET",
+//         cash: false,
+//         success: function (data) {
+//             $('.modal-body').html(data);
+//         }
+//     });
+// }
 
 function getNewUserForm() {
     $.ajax({

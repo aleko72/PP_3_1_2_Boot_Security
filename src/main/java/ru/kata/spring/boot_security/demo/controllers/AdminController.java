@@ -33,7 +33,6 @@ public class AdminController {
     public String index(Principal principal, Model model) {
         User authUser = (User) userService.loadUserByUsername(principal.getName());
         List<String> roles = authUser.getRoleNames();
-
         model.addAttribute("tab_visible", TAB_LIST);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roles);

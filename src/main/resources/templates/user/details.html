@@ -28,31 +28,33 @@
                     <span class="uc-navbar-title navbar-brand mb-0 h1">About user</span>
                 </nav>
             </div>
-            <div class="uc-users-table">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">FirstName</th>
-                        <th scope="col">LastName</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row" th:text="${user.getId()}"></th>
-                        <td th:text="${user.getFirstName()}"></td>
-                        <td th:text="${user.getLastName()}"></td>
-                        <td th:text="${user.getAge()}"></td>
-                        <td th:text="${user.getEmail()}"></td>
-                        <td th:text="${user.getRolesString()}"></td>
-                    </tbody>
-                </table>
+            <div class="tab-content">
+                <div class="uc-users-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" th:text="${user.getId()}"></th>
+                            <td th:text="${user.getFirstName()}"></td>
+                            <td th:text="${user.getLastName()}"></td>
+                            <td th:text="${user.getAge()}"></td>
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${user.getRolesString()}"></td>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
     </div>
-</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
