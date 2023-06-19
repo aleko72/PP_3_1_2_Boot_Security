@@ -27,86 +27,91 @@
             </div>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a th:attr="class=${tab_visible == 'LIST' ? 'tab-link nav-link active' : 'tab-link nav-link'}"
-                       th:href="@{/admin}">Users table</a>
+                    <a class="tab-link nav-link active" href="javascript:void(0);">Users table</a>
                 </li>
                 <li class="nav-item">
-                    <a th:attr="class=${tab_visible == 'ADD' ? 'tab-link nav-link active' : 'tab-link nav-link'}"
-                       th:href="@{/admin/new}">New User</a>
+                    <a class="tab-link nav-link" href="javascript:void(0);">New User</a>
                 </li>
             </ul>
             <div class="uc-content-title">
                 <nav class="navbar navbar-text">
-                    <span th:if="${tab_visible == 'LIST'}" class="uc-navbar-title navbar-brand mb-0 h1">All users</span>
-                    <span th:if="${tab_visible == 'ADD'}" class="uc-navbar-title navbar-brand mb-0 h1">Add new user</span>
+                    <span class="uc-navbar-title navbar-brand mb-0 h1">All users</span>
                 </nav>
             </div>
             <div class="tab-content">
-            <div th:if="${tab_visible == 'LIST'}"><div th:replace="fragments/list_user"></div></div>
-            <div th:if="${tab_visible == 'ADD'}"><div th:replace="fragments/form_new"></div></div>
+                <div class="list-user">
+                    <div th:replace="fragments/list_user"></div>
+                </div>
+                <div class="form-new" style="display: none;">
+                    <div th:replace="fragments/form_new"></div>
+                </div>
             </div>
 
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document" style="margin: auto; text-align: center; padding: 15px">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+<!-- Modal edit form -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin: auto; text-align: center; padding: 15px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+            </div>
+            <div style="margin: auto; width: 75%">
+                <form class="form-edit-user" th:method="PATCH" th:action="@{/admin}" novalidate>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="h5" for="firstName">First Name</label>
+                            <input type="text" class="form-control" name="firstName" id="firstName"
+                                   placeholder="First Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+                            <div class="invalid-feedback">First Name should not be empty, and should be between 2 and 30
+                                characters.
+                            </div>
                         </div>
-                        <div style="margin: auto; width: 75%">
-                            <form class="form-edit-user" th:method="PATCH" novalidate>
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                            <label class="h5" for="firstName">First Name</label>
-                                            <input type="text" class="form-control" name="firstName" id="firstName"
-                                                   placeholder="First Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
-                                            <div class="invalid-feedback">FirstName should not be empty, and should be between 2 and 30 characters.</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="h5" for="lastName">Last Name</label>
-                                            <input type="text" class="form-control" name="lastName" id="lastName"
-                                                   placeholder="Last Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
-                                            <div class="invalid-feedback">LastName should not be empty.</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="h5" for="age">Age</label>
-                                            <input type="text" class="form-control" name="age" id="age"
-                                                   placeholder="Age" required pattern="^\d{1,2}$">
-                                            <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="h5" for="email">Email</label>
-                                            <input type="text" class="form-control" name="email" id="email"
-                                                   placeholder="Email" required pattern="^\S+@\S+\.\S+">
-                                            <div class="invalid-feedback">Email should not be empty.</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="h5" for="password">Password</label>
-                                            <input type="password" class="form-control" name="password" id="password"
-                                                   placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="h5" for="roles">Role</label>
-                                            <select multiple class="form-control" name="roles" id="roles" required>
-                                                <option value="2">ADMIN</option>
-                                                <option value="1">USER</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Edit</button>
-                                </div>
-                            </form>
+                        <div class="form-group">
+                            <label class="h5" for="lastName">Last Name</label>
+                            <input type="text" class="form-control" name="lastName" id="lastName"
+                                   placeholder="Last Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+                            <div class="invalid-feedback">Last Name should not be empty, and should be between 2 and 30
+                                characters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="age">Age</label>
+                            <input min="0" max="99" type="number" class="form-control"  name="age" id="age"
+                                   value="0" placeholder="Age" required pattern="^\d{1,2}$">
+                            <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="email">Email</label>
+                            <input type="text" class="form-control" name="email" id="email"
+                                   placeholder="Email" required pattern="^\S+@\S+\.\S+">
+                            <div class="invalid-feedback">Email should not be empty.</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                   placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="roles">Role</label>
+                            <select multiple class="form-control" name="roles" id="roles" required>
+                                <option value="2">ADMIN</option>
+                                <option value="1">USER</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn-action btn"></button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"

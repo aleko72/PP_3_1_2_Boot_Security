@@ -31,9 +31,13 @@
                             data-roles=${user.getRoleIdsString()}">Edit</button>
                 </td>
                 <td>
-                    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </form>
+                    <button type="button" class="btn btn btn-danger" data-toggle="modal" data-target="#editModal"
+                            th:attr="data-id=${user.getId()},
+                            data-firstName=${user.getFirstName()},
+                            data-lastName=${user.getLastName()},
+                            data-age=${user.getAge()},
+                            data-email=${user.getEmail()},
+                            data-roles=${user.getRoleIdsString()}">Delete</button>
                 </td>
             </tr>
         </th:block>

@@ -1,37 +1,46 @@
-<div class="uc-new-user-form">
-<form th:method="POST" th:action="@{/}" th:object="${user}">
+<div class="uc-new-user-form" >
+<form class="form-new-user" th:method="POST" th:action="@{/admin/}" novalidate>
     <div class="form-group">
         <label class="h5" for="firstName">First Name</label>
-        <input type="text" class="form-control" th:field="*{firstName}" id="firstName" placeholder="First Name">
-        <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        <input type="text" class="form-control" name="firstName" id="firstName"
+               placeholder="First Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+        <div class="invalid-feedback">First Name should not be empty, and should be between 2 and 30
+            characters.
+        </div>
     </div>
     <div class="form-group">
         <label class="h5" for="lastName">Last Name</label>
-        <input type="text" class="form-control" th:field="*{lastName}" id="lastName" placeholder="Last Name">
-        <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        <input type="text" class="form-control" name="lastName" id="lastName"
+               value="" placeholder="Last Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+        <div class="invalid-feedback">Last Name should not be empty, and should be between 2 and 30
+            characters.
+        </div>
     </div>
     <div class="form-group">
         <label class="h5" for="age">Age</label>
-        <input type="text" class="form-control" th:field="*{age}" id="age" placeholder="Age">
-        <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+        <input min="0" max="99" type="number" class="form-control"  name="age" id="age"
+               value="0" placeholder="Age" required pattern="^\d{1,2}$">
+        <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>
     </div>
     <div class="form-group">
         <label class="h5" for="email">Email</label>
-        <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="Email">
-        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <input type="text" class="form-control" name="email" id="email"
+               value="" placeholder="Email"  required pattern="^\S+@\S+\.\S+">
+        <div class="invalid-feedback">Email should not be empty.</div>
     </div>
     <div class="form-group">
         <label class="h5" for="password">Password</label>
-        <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password">
-        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <input type="password" class="form-control" name="password" id="password"
+               value="" placeholder="Password" required>
+        <div class="invalid-feedback">Password should not be empty.</div>
     </div>
     <div class="form-group">
         <label class="h5" for="roles">Role</label>
-        <select multiple class="form-control" th:field="*{roles}" id="roles">
+        <select multiple class="form-control" name="roles" id="roles" required>
             <option value="2">ADMIN</option>
-            <option value="1">USER</option>
+            <option class="active" value="1">USER</option>
         </select>
     </div>
-    <button type="button" class="fn-btn-add-new-user btn btn-success">Add new user</button>
+    <button type="submit" class="fn-btn-add-new-user btn btn-success">Add new user</button>
 </form>
 </div>
