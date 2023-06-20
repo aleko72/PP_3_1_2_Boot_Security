@@ -1,10 +1,9 @@
-<div class="sidenav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" th:object="${roles}">
+<div class="sidenav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
     <ul class="nav nav-pills flex-column">
-        <th:block th:each="role : ${roles}">
-        <li class="nav-item">
-            <a th:attr="class=${role.equals(active) ? 'left-link nav-link active' : 'left-link nav-link'}"
-               th:href="@{/{link}(link=${role.toLowerCase()})}" th:text="${role}"></a>
-        </li>
-        </th:block>
+        <li><a sec:authorize="hasRole('ADMIN')"
+               th:attr="class=${active.equals('Admin') ? 'left-link nav-link active' : 'left-link nav-link'}"
+               th:href="@{/admin}">Admin</a></li>
+        <li><a th:attr="class=${active.equals('User') ? 'left-link nav-link active' : 'left-link nav-link'}"
+               th:href="@{/user}">User</a></li>
     </ul>
 </div>

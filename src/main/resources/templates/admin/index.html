@@ -25,6 +25,11 @@
             <div class="uc-title">
                 <h1>Admin panel</h1>
             </div>
+            <div id="error-content" th:if="${error}" class="alert alert-info" >
+                <th:block th:each="line : ${error.split('#')}">
+                    <span th:text="${line}"></span><br>
+                </th:block>
+            </div>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="tab-link nav-link active" href="javascript:void(0);">Users table</a>
@@ -80,20 +85,27 @@
                         </div>
                         <div class="form-group">
                             <label class="h5" for="age">Age</label>
-                            <input min="0" max="99" type="number" class="form-control"  name="age" id="age"
+                            <input min="0" max="99" type="number" class="form-control" name="age" id="age"
                                    value="0" placeholder="Age" required pattern="^\d{1,2}$">
                             <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>
                         </div>
                         <div class="form-group">
                             <label class="h5" for="email">Email</label>
-                            <input type="text" class="form-control" name="email" id="email"
+                            <input type="text" class="edit form-control" name="email" id="email"
                                    placeholder="Email" required pattern="^\S+@\S+\.\S+">
                             <div class="invalid-feedback">Email should not be empty.</div>
+                            <div class="custom-edit-email-invalid-feedback" style="display: none">User with this email
+                                already exists.
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="h5" for="password">Password</label>
                             <input type="password" class="form-control" name="password" id="password"
+                                   pattern="^()|(\S{2,8})$"
                                    placeholder="Password">
+                            <div class="invalid-feedback">Leave the password blank to keep the current one,
+                                or enter 2 to 8 characters to change.
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="h5" for="roles">Role</label>
@@ -105,7 +117,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn-action btn"></button>
+                        <button type="button" class="fn-btn-edit-user btn-action btn"></button>
                     </div>
                 </form>
             </div>
