@@ -8,14 +8,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -43,8 +42,6 @@ public class User implements UserDetails{
     @Column(name = "password", nullable = false)
     @NotEmpty(message = "Password should not be empty")
     private String password;
-
-
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -124,6 +121,7 @@ public class User implements UserDetails{
     public List<String> getRoleNames() {
         return roles.stream().map(this::normalizeName).sorted().collect(Collectors.toList());
     }
+
     public String getRolesString() {
         return String.join(" ", getRoleNames()).toUpperCase();
     }
@@ -144,6 +142,7 @@ public class User implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
     @Override
     public String getUsername() {
         return email;

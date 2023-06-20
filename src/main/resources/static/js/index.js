@@ -24,10 +24,21 @@ $(function () {
     $('.tab-link').on('click', function () {
         $('.tab-link').removeClass('active');
         $(this).addClass('active');
+
+        function setDefaultValuesForm(formNew) {
+            formNew.find('#firstName').val('');
+            formNew.find('#lastName').val('');
+            formNew.find('#age').val(0);
+            formNew.find('#email').val('');
+            formNew.find('#password').val('');
+            formNew.find('#roles').val([1])
+        }
+
         if ($(this).text() === 'New User') {
             $('.list-user').hide();
             $('.form-new').show();
             $('.uc-navbar-title').text('Add new user');
+            setDefaultValuesForm($('.form-new-user'));
         } else {
             $('.list-user').show();
             $('.form-new').hide();
@@ -47,9 +58,9 @@ $(function () {
     'use strict';
     window.addEventListener('load', function () {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('form-edit-user');
+        const forms = document.getElementsByClassName('form-edit-user');
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
+        const validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
@@ -61,9 +72,9 @@ $(function () {
     }, false);
     window.addEventListener('load', function () {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('form-new-user');
+        const forms = document.getElementsByClassName('form-new-user');
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
+        const validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
