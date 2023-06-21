@@ -1,13 +1,26 @@
+$(function(){
+
+    $('.tab-link').on('click', async function () {
+        let response = await fetch("/util/checkEmail?id=1&email=admin@mail.ru")
+        let commits = await response.json();
+        alert(commits);
+    });
+
+});
+
+
+
 $(function () {
+
     $('#editModal').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
         const modal = $(this);
         const isDisabled = button.text() === 'Delete';
 
-        if(isDisabled){
+        if (isDisabled) {
             modal.find('.btn-action').addClass("btn-danger").text("Delete")
             modal.find("[name='_method']").val('DELETE');
-        }else{
+        } else {
             modal.find('.btn-action').addClass("btn-primary").text("Edit")
             modal.find("[name='_method']").val('PATCH');
         }
@@ -48,21 +61,21 @@ $(function () {
         }
     });
 
-    $(function (){
+    $(function () {
         $('.fn-btn-add-new-user').on('click', function () {
             $('.custom-new-email-invalid-feedback').hide();
             $('input#email.new').removeClass('error-email');
 
             const email = $('input#email.new').val();
-            if(email !== ''){
+            if (email !== '') {
                 checkEmail(0, email, 'form-new-user');
-            }else{
+            } else {
                 $('.form-new-user').trigger('submit');
             }
         })
     });
 
-    $('.form-new-user' ).on( 'submit', function( event ) {
+    $('.form-new-user').on('submit', function (event) {
 
         if (this.checkValidity() === false) {
             event.preventDefault();
@@ -71,22 +84,22 @@ $(function () {
         this.classList.add('was-validated');
     });
 
-    $(function (){
+    $(function () {
         $('.fn-btn-edit-user').on('click', function () {
             $('.custom-edit-email-invalid-feedback').hide();
             $('input#email.edit').removeClass('error-email');
 
             const id = $('.form-edit-user').attr('data-id');
             const email = $('input#email.edit').val();
-            if(email !== ''){
+            if (email !== '') {
                 checkEmail(id, email, 'form-edit-user');
-            }else{
+            } else {
                 $('.form-edit-user').trigger('submit');
             }
         })
     });
 
-    $('.form-edit-user' ).on( 'submit', function( event ) {
+    $('.form-edit-user').on('submit', function (event) {
 
         if (this.checkValidity() === false) {
             event.preventDefault();

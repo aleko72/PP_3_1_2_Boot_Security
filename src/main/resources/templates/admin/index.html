@@ -25,7 +25,7 @@
             <div class="uc-title">
                 <h1>Admin panel</h1>
             </div>
-            <div id="error-content" th:if="${error}" class="alert alert-info" >
+            <div id="error-content" th:if="${error}" class="alert alert-danger" role="alert" >
                 <th:block th:each="line : ${error.split('#')}">
                     <span th:text="${line}"></span><br>
                 </th:block>
