@@ -4,10 +4,10 @@ $(function () {
         const modal = $(this);
         const isDisabled = button.text() === 'Delete';
 
-        if(isDisabled){
+        if (isDisabled) {
             modal.find('.btn-action').addClass("btn-danger").text("Delete")
             modal.find("[name='_method']").val('DELETE');
-        }else{
+        } else {
             modal.find('.btn-action').addClass("btn-primary").text("Edit")
             modal.find("[name='_method']").val('PATCH');
         }
@@ -48,21 +48,19 @@ $(function () {
         }
     });
 
-    $(function (){
-        $('.fn-btn-add-new-user').on('click', function () {
-            $('.custom-new-email-invalid-feedback').hide();
-            $('input#email.new').removeClass('error-email');
+    $('.fn-btn-add-new-user').on('click', function () {
+        $('.custom-new-email-invalid-feedback').hide();
+        $('input#email.new').removeClass('error-email');
 
-            const email = $('input#email.new').val();
-            if(email !== ''){
-                checkEmail(0, email, 'form-new-user');
-            }else{
-                $('.form-new-user').trigger('submit');
-            }
-        })
-    });
+        const email = $('input#email.new').val();
+        if (email !== '') {
+            checkEmail(0, email, 'form-new-user');
+        } else {
+            $('.form-new-user').trigger('submit');
+        }
+    })
 
-    $('.form-new-user' ).on( 'submit', function( event ) {
+    $('.form-new-user').on('submit', function (event) {
 
         if (this.checkValidity() === false) {
             event.preventDefault();
@@ -71,22 +69,20 @@ $(function () {
         this.classList.add('was-validated');
     });
 
-    $(function (){
-        $('.fn-btn-edit-user').on('click', function () {
-            $('.custom-edit-email-invalid-feedback').hide();
-            $('input#email.edit').removeClass('error-email');
+    $('.fn-btn-edit-user').on('click', function () {
+        $('.custom-edit-email-invalid-feedback').hide();
+        $('input#email.edit').removeClass('error-email');
 
-            const id = $('.form-edit-user').attr('data-id');
-            const email = $('input#email.edit').val();
-            if(email !== ''){
-                checkEmail(id, email, 'form-edit-user');
-            }else{
-                $('.form-edit-user').trigger('submit');
-            }
-        })
-    });
+        const id = $('.form-edit-user').attr('data-id');
+        const email = $('input#email.edit').val();
+        if (email !== '') {
+            checkEmail(id, email, 'form-edit-user');
+        } else {
+            $('.form-edit-user').trigger('submit');
+        }
+    })
 
-    $('.form-edit-user' ).on( 'submit', function( event ) {
+    $('.form-edit-user').on('submit', function (event) {
 
         if (this.checkValidity() === false) {
             event.preventDefault();
@@ -103,13 +99,13 @@ function checkEmail(id, email, formName) {
         cash: false,
         data: {id: id, email: email},
         success: function (data) {
-            if(data){
+            if (data) {
                 $('.' + formName).trigger('submit');
-            }else{
-                if(formName === 'form-new-user'){
+            } else {
+                if (formName === 'form-new-user') {
                     $('.custom-new-email-invalid-feedback').show();
                     $('input#email.new').addClass('error-email');
-                }else if(formName === 'form-edit-user'){
+                } else if (formName === 'form-edit-user') {
                     $('.custom-edit-email-invalid-feedback').show();
                     $('input#email.edit').addClass('error-email');
                 }
