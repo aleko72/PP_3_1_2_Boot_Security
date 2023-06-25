@@ -13,35 +13,27 @@ $(function () {
         switchPanel(panelName);
     });
 
-
     $('.tab-link.tab-list-user').on('click', function () {
         getUsers();
     });
 
     $('#editModal').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
+
         const modal = $(this);
         const isDisabled = button.text() === 'Delete';
-
+        const id = button.attr('data-id');
+        modal.find('.form-edit-user').attr('data-id', id);
         if (isDisabled) {
             modal.find('.btn-action').addClass("btn-danger").text("Delete")
-            modal.find("[name='_method']").val('DELETE');
         } else {
             modal.find('.btn-action').addClass("btn-primary").text("Edit")
-            modal.find("[name='_method']").val('PATCH');
         }
-
-        modal.find('.form-edit-user').attr('action', '/admin/' + button.attr('data-id'))
-            .attr('data-id', button.attr('data-id')).prop("disabled", isDisabled);
-        modal.find('#firstName').val(button.attr('data-firstName')).prop("disabled", isDisabled);
-        modal.find('#lastName').val(button.attr('data-lastName')).prop("disabled", isDisabled);
-        modal.find('#age').val(button.attr('data-age')).prop("disabled", isDisabled);
-        modal.find('#email').val(button.attr('data-email')).prop("disabled", isDisabled);
-        modal.find('#password').prop("disabled", isDisabled);
-        //modal.find('#roles').val(button.attr('data-roles').split(' ')).prop("disabled", isDisabled);
+        getUser(id, bindEditForm)
     });
 
     $('.tab-link').on('click', function () {
+        error.style.visibility = 'hidden';
         $('.tab-link').removeClass('active');
         $(this).addClass('active');
 
@@ -67,13 +59,10 @@ $(function () {
         }
     });
 
-
     $('.fn-btn-add-new-user').on('click', function () {
         error.style.visibility = 'hidden';
         $('.custom-new-email-invalid-feedback').hide();
-        $('input#email.new').removeClass('error-email');
-
-        const email = $('input#email.new').val();
+        const email = $('input#email.new').removeClass('error-email').val();
         if (email !== '') {
             checkEmail(0, email, 'form-new-user');
         } else {
@@ -81,25 +70,29 @@ $(function () {
         }
     });
 
-
-
     $('.fn-btn-edit-user').on('click', function () {
         error.style.visibility = 'hidden';
-        $('.custom-edit-email-invalid-feedback').hide();
-        $('input#email.edit').removeClass('error-email');
+        const formEditUser = $('.form-edit-user');
+        const id = formEditUser.attr('data-id');
 
-        const id = $('.form-edit-user').attr('data-id');
-        const email = $('input#email.edit').val();
+        if($(this).text() === 'Delete'){
+            deleteUser(id);
+            return;
+        }
+
+        $('.custom-edit-email-invalid-feedback').hide();
+        const email = $('input#email.edit').removeClass('error-email').val();
         if (email !== '') {
             checkEmail(id, email, 'form-edit-user');
         } else {
-            $('.form-edit-user').trigger('submit');
+            formEditUser.addClass('was-validated');
         }
     })
 
 });
 
 function switchPanel(leftPanel) {
+    error.style.visibility = 'hidden';
     if(leftPanel === 'Admin'){
         $('.uc-title').html('<h1>Admin panel</h1>');
         $('.nav-tabs').show();
@@ -117,12 +110,12 @@ function switchPanel(leftPanel) {
         $('.form-new').hide();
         const id = $('.left-link.active').attr('data-id');
         $('th.action').hide();
-        getUser(id, bindTableUsers);
+        getUser(id, bindDetailsUser);
     }
 }
 
 function getUsers() {
-    fetch('/adminRest/users')
+    fetch('/users')
         .then(res => res.json())
         .then(data => {
             let html = '';
@@ -142,14 +135,14 @@ function getUsers() {
 }
 
 function getUser(id, callback) {
-    fetch('/adminRest/user/' + id)
+    fetch('/user/' + id)
         .then(res => res.json())
         .then(user => {
             callback(user);
         });
 }
 
-function bindTableUsers(user) {
+function bindDetailsUser(user) {
     tableUsers.innerHTML = `<tr>
                 <th scope='row'>${user.id}</th>
                 <td>${user.firstName}</td>
@@ -159,6 +152,17 @@ function bindTableUsers(user) {
                 <td>${user.rolesString}</td>`;
 }
 
+function bindEditForm(user) {
+    const modal = $(formEditUser);
+    const isDisabled = modal.find('.btn-action').text() === 'Delete';
+    modal.find('#firstName').val(user.firstName).prop("disabled", isDisabled);
+    modal.find('#lastName').val(user.lastName).prop("disabled", isDisabled);
+    modal.find('#age').val(user.age).prop("disabled", isDisabled);
+    modal.find('#email').val(user.email).prop("disabled", isDisabled);
+    modal.find('#password').prop("disabled", isDisabled);
+    modal.find('#roles').val(user.roleIdsString.split(' ')).prop("disabled", isDisabled);
+}
+
 function addUser() {
     if (formNewUser.checkValidity() === false) {
         formNewUser.classList.add('was-validated');
@@ -166,31 +170,65 @@ function addUser() {
     }
 
     const formData = new FormData(formNewUser);
-    fetch('/adminRest/', {
+    fetch('/', {
         method: 'POST',
         mode: "cors",
-        credentials: "same-origin",
         body: formData
     })
         .then(res => res.text())
         .then(data => {
             if(data !== ''){
-                error.style.visibility = 'visible';
-                error.innerHTML = data;
+                setError(data)
             }
             $('.tab-list-user').trigger('click');
         });
 }
 
+function editUser(id) {
+    if (formEditUser.checkValidity() === false) {
+        formEditUser.classList.add('was-validated');
+        return;
+    }
+
+    const formData = new FormData(formEditUser);
+    fetch('/' + id, {
+        method: 'PATCH',
+        mode: "cors",
+        body: formData
+    })
+        .then(res => res.text())
+        .then(data => {
+            if(data !== ''){
+                setError(data)
+            }
+            $('#editModal').modal('hide');
+            $('.tab-list-user').trigger('click');
+        });
+}
+
+function deleteUser(id) {
+    const formData = new FormData(formEditUser);
+    fetch('/' + id, {
+        method: 'DELETE',
+        mode: "cors",
+        body: formData
+    })
+        .then(() => {
+            $('#editModal').modal('hide');
+            $('.tab-list-user').trigger('click');
+        });
+}
+
 function checkEmail(id, email, formName) {
-    $.ajax({
-        url: '/util/checkEmail',
-        type: "GET",
-        cash: false,
-        data: {id: id, email: email},
-        success: function (data) {
+    fetch(`/checkEmail?id=${id}&email=${email}`)
+        .then(res => res.json())
+        .then(data => {
             if(data){
-                addUser();
+                if(formName === 'form-new-user'){
+                    addUser();
+                }else if(formName === 'form-edit-user'){
+                    editUser(id);
+                }
             }else{
                 if(formName === 'form-new-user'){
                     $('.custom-new-email-invalid-feedback').show();
@@ -200,7 +238,11 @@ function checkEmail(id, email, formName) {
                     $('input#email.edit').addClass('error-email');
                 }
             }
-        }
-    });
+        });
+}
+
+function setError(data){
+    error.style.visibility = 'visible';
+    error.innerHTML = data.replace('#', '<br>');
 }
 

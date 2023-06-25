@@ -1,18 +1,17 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.security.Principal;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
-@RequestMapping("/user")
+@RestController
 public class UserController {
 
     private final UserService userService;
@@ -22,15 +21,65 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public String index(Principal principal, Model model) {
-        User authUser = (User) userService.loadUserByUsername(principal.getName());
-        List<String> roles = authUser.getRoleNames();
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getUsers();
+    }
 
-        model.addAttribute("user", authUser);
-        model.addAttribute("roles", roles);
-        model.addAttribute("active", "User");
-        return "user/details";
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable long id) {
+        return userService.getUserById(id);
+    }
 
+    @GetMapping("/checkEmail")
+    public Boolean checkEmail(long id, String email) {
+        User userByEmail = userService.getUsers()
+                .stream()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst().orElse(null);
+
+        if (id != 0) {
+            User userById = userService.getUserById(id);
+            if (userByEmail != null && userById.getEmail().equals(userByEmail.getEmail())) {
+                return true;
+            }
+        }
+        return userByEmail == null;
+    }
+
+    @PostMapping("/")
+    public String create(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder error = new StringBuilder("Failed to create user:");
+            error.append("#");
+            for (FieldError e : bindingResult.getFieldErrors()) {
+                error.append(e.getDefaultMessage()).append("#");
+            }
+            return error.toString();
+        }
+        userService.save(user);
+        return null;
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") Long id, @Valid User user, BindingResult bindingResult) {
+        List<FieldError> errors = bindingResult.getFieldErrors().stream()
+                .filter(f -> !f.getField().equals("password")).collect(Collectors.toList());
+        if (errors.size() > 0) {
+            StringBuilder error = new StringBuilder("Failed to update user:");
+            error.append("#");
+            for (FieldError e : errors) {
+                error.append(e.getDefaultMessage()).append("#");
+            }
+            return error.toString();
+        }
+        userService.update(id, user);
+        return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        userService.delete(id);
+        return null;
     }
 }
