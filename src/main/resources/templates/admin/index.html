@@ -80,53 +80,53 @@
             <div style="margin: auto; width: 75%">
                 <form class="form-edit-user" th:method="PATCH" th:action="@{/admin}" novalidate>
                     <div class="modal-body">
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="firstName">First Name</label>-->
-<!--                            <input type="text" class="form-control" name="firstName" id="firstName"-->
-<!--                                   placeholder="First Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">-->
-<!--                            <div class="invalid-feedback">First Name should not be empty, and should be between 2 and 30-->
-<!--                                characters.-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="lastName">Last Name</label>-->
-<!--                            <input type="text" class="form-control" name="lastName" id="lastName"-->
-<!--                                   placeholder="Last Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">-->
-<!--                            <div class="invalid-feedback">Last Name should not be empty, and should be between 2 and 30-->
-<!--                                characters.-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="age">Age</label>-->
-<!--                            <input min="0" max="99" type="number" class="form-control" name="age" id="age"-->
-<!--                                   value="0" placeholder="Age" required pattern="^\d{1,2}$">-->
-<!--                            <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="email">Email</label>-->
-<!--                            <input type="text" class="edit form-control" name="email" id="email"-->
-<!--                                   placeholder="Email" required pattern="^\S+@\S+\.\S+">-->
-<!--                            <div class="invalid-feedback">Email should not be empty.</div>-->
-<!--                            <div class="custom-edit-email-invalid-feedback" style="display: none">User with this email-->
-<!--                                already exists.-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="password">Password</label>-->
-<!--                            <input type="password" class="form-control" name="password" id="password"-->
-<!--                                   pattern="^()|(\S{2,8})$"-->
-<!--                                   placeholder="Password">-->
-<!--                            <div class="invalid-feedback">Leave the password blank to keep the current one,-->
-<!--                                or enter 2 to 8 characters to change.-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label class="h5" for="roles">Role</label>-->
-<!--                            <select multiple class="form-control" name="roles" id="roles" required>-->
-<!--                                <option value="2">ADMIN</option>-->
-<!--                                <option value="1">USER</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
+                        <div class="form-group">
+                            <label class="h5" for="firstName">First Name</label>
+                            <input type="text" class="form-control" name="firstName" id="firstName"
+                                   placeholder="First Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+                            <div class="invalid-feedback">First Name should not be empty, and should be between 2 and 30
+                                characters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="lastName">Last Name</label>
+                            <input type="text" class="form-control" name="lastName" id="lastName"
+                                   placeholder="Last Name" required pattern="^[a-zA-Zа-яА-Я]{2,30}$">
+                            <div class="invalid-feedback">Last Name should not be empty, and should be between 2 and 30
+                                characters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="age">Age</label>
+                            <input min="0" max="99" type="number" class="form-control" name="age" id="age"
+                                   value="0" placeholder="Age" required pattern="^\d{1,2}$">
+                            <div class="invalid-feedback">Age should not be empty, and should be greater than 0</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="email">Email</label>
+                            <input type="text" class="edit form-control" name="email" id="email"
+                                   placeholder="Email" required pattern="^\S+@\S+\.\S+">
+                            <div class="invalid-feedback">Email should not be empty.</div>
+                            <div class="custom-edit-email-invalid-feedback" style="display: none">User with this email
+                                already exists.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                   pattern="^()|(\S{2,8})$"
+                                   placeholder="Password">
+                            <div class="invalid-feedback">Leave the password blank to keep the current one,
+                                or enter 2 to 8 characters to change.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="h5" for="roles">Role</label>
+                            <select multiple class="form-control" name="roles" id="roles" required>
+                                <option value="2">ADMIN</option>
+                                <option value="1">USER</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
