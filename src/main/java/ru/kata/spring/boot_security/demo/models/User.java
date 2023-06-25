@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -39,6 +40,7 @@ public class User implements UserDetails {
     @Email
     private String email;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     @NotEmpty(message = "Password should not be empty")
     private String password;
@@ -122,6 +124,7 @@ public class User implements UserDetails {
         return roles.stream().map(this::normalizeName).sorted().collect(Collectors.toList());
     }
 
+
     public String getRolesString() {
         return String.join(" ", getRoleNames()).toUpperCase();
     }
@@ -130,6 +133,7 @@ public class User implements UserDetails {
         String name = role.getName().substring(5).toLowerCase();
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
+
 
     public String getRoleIdsString() {
         return roles

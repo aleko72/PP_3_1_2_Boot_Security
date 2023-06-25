@@ -30,11 +30,11 @@ public class AdminController {
     @GetMapping()
     public String index(Principal principal, Model model) {
         User authUser = (User) userService.loadUserByUsername(principal.getName());
-
         List<String> roles = authUser.getRoleNames();
+
+        model.addAttribute("id", authUser.getId());
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roles);
-        model.addAttribute("active", "Admin");
         return "admin/index";
     }
 
