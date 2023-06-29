@@ -13,12 +13,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class AdminController {
+public class HomeController {
 
     private final UserService userService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public HomeController(UserService userService) {
 
         this.userService = userService;
     }
@@ -31,6 +31,6 @@ public class AdminController {
         model.addAttribute("id", authUser.getId());
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roles);
-        return "admin/index";
+        return "index";
     }
 }
